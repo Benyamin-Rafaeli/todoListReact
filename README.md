@@ -1,8 +1,8 @@
-# ToDo Application
-# 🪢 React
-# 🪢 TypeScript
-# 🪢 Zustand
-# 🪢 ViteJS
+## ToDo Application
+### 🪢 React
+### 🪢 TypeScript
+### 🪢 Zustand
+### 🪢 ViteJS
 
 🌱 local icons repo: https://github.com/liveldi/files_for_todo_list
 
