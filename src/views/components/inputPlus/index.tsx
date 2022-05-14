@@ -1,10 +1,23 @@
 import styles from './index.module.scss';
-import React from 'react';
+import React, { useState } from 'react';
 
 interface InputPlusProps {
   onAdd: (title: string) => void;
 }
 
 export const InputPlus: React.FC<InputPlusProps> = ({ onAdd }) => {
-  return <div>1231</div>;
+  const [inputValue, setInputValue] = useState('');
+  return (
+    <div className={styles.inputPlus}>
+      <input
+        type="text"
+        className={styles.inputPlusValue}
+        value={inputValue}
+        onChange={evt => {
+          setInputValue(evt.target.value);
+        }}
+      />
+      <button />
+    </div>
+  );
 };
