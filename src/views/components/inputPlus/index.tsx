@@ -1,5 +1,5 @@
 import styles from './index.module.scss';
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 interface InputPlusProps {
   onAdd: (title: string) => void;
@@ -7,6 +7,12 @@ interface InputPlusProps {
 
 export const InputPlus: React.FC<InputPlusProps> = ({ onAdd }) => {
   const [inputValue, setInputValue] = useState('');
+
+  const addTask = useCallback(() => {
+    onAdd(inputValue);
+    setInputValue('');
+  }, [inputValue]);
+
   return (
     <div className={styles.inputPlus}>
       <input
@@ -16,8 +22,14 @@ export const InputPlus: React.FC<InputPlusProps> = ({ onAdd }) => {
         onChange={evt => {
           setInputValue(evt.target.value);
         }}
+        onKeyDown={() => {
+          // @ts-ignore
+          if (evt.key === 'Enter') {
+            addTask();
+          }
+        }}
       />
-      <button />
+      <button onClick={addTask} aria-label="Add" className={styles.inputPlusButton} />
     </div>
   );
 };
