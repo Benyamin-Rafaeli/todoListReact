@@ -1,5 +1,5 @@
-import styles from './index.module.scss';
 import React, { ChangeEvent, useCallback, useState } from 'react';
+import styles from './index.module.scss';
 
 interface InputPlusProps {
   onAdd: (title: string) => void;
