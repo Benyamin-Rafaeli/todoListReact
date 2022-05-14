@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './index.module.scss';
 
 interface InputTaskProps {
@@ -14,7 +14,7 @@ export const InputTask: React.FC<InputTaskProps> = ({ id, title, onDone, onEdite
 
   return (
     <div className={styles.inputTask}>
-      <label>
+      <label className={styles.inputTaskLabel}>
         <input
           type="checkbox"
           checked={checked}
