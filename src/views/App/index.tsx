@@ -15,6 +15,8 @@ export const App: React.FC = () => {
     createTask('idjshgiu');
   }, []);
 
+  console.log(tasks);
+
   return (
     <article className={styles.article}>
       <h1 className={styles.articleTitle}>To Do App</h1>
@@ -26,7 +28,7 @@ export const App: React.FC = () => {
           }
         }}
       />
-      <section className={styles.articleSection}></section>
+      <section className={styles.articleSection}>{!tasks.length && <p className={styles.articleText}> There is no one tasks. </p> }</section>
     </article>
   );
 };
