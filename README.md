@@ -3,6 +3,8 @@
 ### 🪢 TypeScript
 ### 🪢 Zustand
 ### 🪢 ViteJS
+### 🪢 Middleware
+### 🪢 Local Storage
 
 🌱 local icons repo: https://github.com/liveldi/files_for_todo_list
 
