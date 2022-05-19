@@ -51,13 +51,19 @@
 
   &Edit {
     background: url('../images/edit.svg');
+    background-repeat: no-repeat;
+    background-position: center;
   }
 
   &Remove {
     background: url('../images/trash.svg');
+    background-repeat: no-repeat;
+    background-position: center;
   }
 
   &Save {
     background: url('../images/check.svg');
+    background-repeat: no-repeat;
+    background-position: center;
   }
 }

@@ -53,7 +53,7 @@ export const InputTask: React.FC<InputTaskProps> = ({ id, title, onDone, onEdite
             className={styles.inputTaskEditTitle}
           />
         ) : (
-          <h3 className={styles.inputTaskTitle}></h3>
+          <h3 className={styles.inputTaskTitle}>{value}</h3>
         )}
       </label>
       {isEditMode ? (
