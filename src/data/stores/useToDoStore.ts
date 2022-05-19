@@ -1,5 +1,6 @@
+import create, { State, StateCreator } from 'zustand';
+import { devtools } from 'zustand/middleware';
 import { generateId } from '../helpers';
-import create from 'zustand';
 
 interface Task {
   id: string;
@@ -14,33 +15,52 @@ interface ToDoStore {
   removeTask: (title: string) => void;
 }
 
-export const useToDoStore = create<ToDoStore>((set, get) => ({
-  tasks: [
-    {
-      id: 'sjfowjf',
-      title: 'My default task',
-      createdAt: 987698,
-    },
-    {
-      id: 'sjfowjfsdgf',
-      title: 'My defausdf`slt task',
-      createdAt: 9876934,
-    },
-  ],
+function isToDoStore(object: any): object is ToDoStore {
+  return 'tasks' in object;
+}
 
-  createTask: (title: string) => {
-    const { tasks } = get();
-    const newTask = { id: generateId(), title, createdAt: Date.now() };
-    set({ tasks: [newTask].concat(tasks) });
-  },
+const getCurrentState = () => {
+  try {
+    return JSON.parse(window.localStorage.getItem('tasks') || '[]') as Task[];
+  } catch (err) {
+    window.localStorage.setItem('tasks', '[]');
+  }
+  return [];
+};
+const localStorageUpdate =
+  <T extends State>(config: StateCreator<T>): StateCreator<T> =>
+  (set, get, api) =>
+    config(
+      (nextState, ...args) => {
+        if (isToDoStore(nextState)) {
+          window.localStorage.setItem('tasks', JSON.stringify(nextState.tasks));
+        }
+        set(nextState, ...args);
+      },
+      get,
+      api,
+    );
 
-  updateTask: (id: string, title: string) => {
-    const { tasks } = get();
-    set({ tasks: tasks.map((task: Task) => ({ ...task, title: task.id === id ? title : task.title })) });
-  },
+export const useToDoStore = create<ToDoStore>(
+  localStorageUpdate(
+    devtools((set, get) => ({
+      tasks: getCurrentState(),
 
-  removeTask: (id: string) => {
-    const { tasks } = get();
-    set({ tasks: tasks.filter((task: Task) => task.id !== id) });
-  },
-}));
+      createTask: (title: string) => {
+        const { tasks } = get();
+        const newTask = { id: generateId(), title, createdAt: Date.now() };
+        set({ tasks: [newTask].concat(tasks) });
+      },
+
+      updateTask: (id: string, title: string) => {
+        const { tasks } = get();
+        set({ tasks: tasks.map((task: Task) => ({ ...task, title: task.id === id ? title : task.title })) });
+      },
+
+      removeTask: (id: string) => {
+        const { tasks } = get();
+        set({ tasks: tasks.filter((task: Task) => task.id !== id) });
+      },
+    })),
+  ),
+);
